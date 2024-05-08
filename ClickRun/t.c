@@ -17,6 +17,7 @@ static HWND hFont;			// 统一字体
 static HWND hTip1;			// 鼠标左右键选择文本
 static HWND hRadio_Left;	// 鼠标左键按钮
 static HWND hRadio_Right;	// 鼠标右键按钮
+static HWND hRandPos;		// 随机位置
 
 static HWND hTip2;			// 模拟方式选择文本
 static HWND hCombo_Func;	// 方式选择框
@@ -48,6 +49,8 @@ TCHAR str_TL[20] = { 0 };
 BOOL ClickRunning = FALSE;
 // 连点线程句柄
 HANDLE hClickThread = NULL;
+//	标志附近位置是否启动
+BOOL RandPos = FALSE;
 
 // 备选热键列表
 const TCHAR str_HKList[12][4] = { 
@@ -87,6 +90,7 @@ INT FlashConfig()
 		RegQueryValueEx(hKey, TEXT("Func"), NULL, &dwType, (LPBYTE)(&Func), &dwSize);
 		RegQueryValueEx(hKey, TEXT("TL"), NULL, &dwType, (LPBYTE)(&dig_TL), &dwSize);
 		RegQueryValueEx(hKey, TEXT("HK"), NULL, &dwType, (LPBYTE)(&HK_Index), &dwSize);
+		RegQueryValueEx(hKey, TEXT("RandPos"), NULL, &dwType, (LPBYTE)(&RandPos), &dwSize);
 	}
 	RegCloseKey(hKey);
 	if (LeftorRight)
@@ -100,6 +104,7 @@ INT FlashConfig()
 	SendMessage(hCombo_Func, CB_SETCURSEL, Func, 0);
 	SendMessage(hText_TL, WM_SETTEXT, NULL, _itow(dig_TL, str_TL, 10));
 	SendMessage(hCombo_HK, CB_SETCURSEL, HK_Index, 0);
+	SendMessage(hRandPos, BM_SETCHECK, RandPos, 0);
 
 	return 0;
 }
@@ -118,6 +123,7 @@ INT SaveConfig()
 		RegSetValueEx(hKey, TEXT("Func"), NULL, dwType, (LPCBYTE)(&Func), dwSize);
 		RegSetValueEx(hKey, TEXT("TL"), NULL, dwType, (LPCBYTE)(&dig_TL), dwSize);
 		RegSetValueEx(hKey, TEXT("HK"), NULL, dwType, (LPCBYTE)(&HK_Index), dwSize);
+		RegSetValueEx(hKey, TEXT("RandPos"), NULL, dwType, (LPCBYTE)(&RandPos), dwSize);
 		RegCloseKey(hKey);
 		return 0;
 	}
@@ -128,11 +134,35 @@ INT SaveConfig()
 	
 }
 
+void RandNum(int* rand_x, int* rand_y, int* rand_time)
+{
+	if (RandPos)
+	{
+		static int rand_num = 0;
+		rand_num++;
+		if (rand_num % 2 == 0)
+		{
+			*rand_x = rand() % 100;
+			*rand_y = rand() % 100;
+		}
+		else
+		{
+			*rand_x *= -1;
+			*rand_y *= -1;
+		}
+		*rand_time = rand() % (int)(dig_TL*0.1);
+	}
+}
+
 // 连点执行者，循环放在最里层，减少不必要的重复判断
 DWORD WINAPI ClickRunner(LPVOID lpParam)
 {
+	srand(time(0));
 	INPUT Down = { 0 }, Up = { 0 };// SendInput使用（按下、抬起）
 
+	int rand_x = 0, rand_y = 0;
+	int rand_time = 0;
+	int rand_num = 0;
 	switch (Func)
 	{
 		// mouse_event
@@ -141,40 +171,47 @@ DWORD WINAPI ClickRunner(LPVOID lpParam)
 			{
 				while (TRUE)
 				{
-					mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-					mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-					Sleep(dig_TL);
+					RandNum(&rand_x, &rand_y, &rand_time);
+					mouse_event(MOUSEEVENTF_LEFTDOWN, rand_x, rand_y, 0, 0);
+					mouse_event(MOUSEEVENTF_LEFTUP, rand_x, rand_y, 0, 0);
+					Sleep(dig_TL + rand_time);
 				}
 			}
 			else
 			{
 				while (TRUE)
 				{
-					mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
-					mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
-					Sleep(dig_TL);
+					RandNum(&rand_x, &rand_y, &rand_time);
+					mouse_event(MOUSEEVENTF_RIGHTDOWN, rand_x, rand_y, 0, 0);
+					mouse_event(MOUSEEVENTF_RIGHTUP, rand_x, rand_y, 0, 0);
+					Sleep(dig_TL + rand_time);
 				}
 			}
 			break;
 		// SendInput
 		case 1:
-			Down.type = INPUT_MOUSE;
-			Up.type = INPUT_MOUSE;
-			if (LeftorRight)
-			{
-				Down.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-				Up.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-			}
-			else
-			{
-				Down.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
-				Up.mi.dwFlags = MOUSEEVENTF_RIGHTUP;
-			}
 			while (TRUE)
 			{
+				RandNum(&rand_x, &rand_y, &rand_time);
+				Down.type = INPUT_MOUSE;
+				Up.type = INPUT_MOUSE;
+				Down.mi.dx = rand_x;
+				Down.mi.dy = rand_y;
+				Up.mi.dx = rand_x;
+				Up.mi.dy = rand_y;
+				if (LeftorRight)
+				{
+					Down.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+					Up.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+				}
+				else
+				{
+					Down.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
+					Up.mi.dwFlags = MOUSEEVENTF_RIGHTUP;
+				}
 				SendInput(TRUE, &Down, sizeof(INPUT));
 				SendInput(TRUE, &Up, sizeof(INPUT));
-				Sleep(dig_TL);
+				Sleep(dig_TL + rand_time);
 			}
 			break;
 		default:
@@ -211,8 +248,9 @@ LRESULT WINAPI CtlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hFont = CreateFont(-14, -7, 0, 0, 400, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_CHARACTER_PRECIS, CLIP_CHARACTER_PRECIS, DEFAULT_QUALITY, FF_DONTCARE, TEXT("微软雅黑"));
 		hTip1 = CreateWindow(TEXT("Static"), TEXT("按键选择："), WS_CHILD | WS_VISIBLE, 15, 10, 300, 100, hWnd, NULL, hWnd, 0);
-		hRadio_Left = CreateWindow(TEXT("Button"), TEXT("鼠标左键"), WS_CHILD | WS_VISIBLE | BS_LEFT | BS_AUTORADIOBUTTON, 60, 35, 80, 20, hWnd, (HMENU)ID_BtnSel, hWnd, 0);
-		hRadio_Right = CreateWindow(TEXT("Button"), TEXT("鼠标右键"), WS_CHILD | WS_VISIBLE | BS_LEFT | BS_AUTORADIOBUTTON, 200, 35, 80, 20, hWnd, (HMENU)ID_BtnSel, hWnd, 0);
+		hRadio_Left = CreateWindow(TEXT("Button"), TEXT("鼠标左键"), WS_CHILD | WS_VISIBLE | BS_LEFT | BS_AUTORADIOBUTTON, 40, 35, 80, 20, hWnd, (HMENU)ID_BtnSel, hWnd, 0);
+		hRadio_Right = CreateWindow(TEXT("Button"), TEXT("鼠标右键"), WS_CHILD | WS_VISIBLE | BS_LEFT | BS_AUTORADIOBUTTON, 150, 35, 80, 20, hWnd, (HMENU)ID_BtnSel, hWnd, 0);
+		hRandPos = CreateWindow(TEXT("Button"), TEXT("附近位置"), WS_CHILD | WS_VISIBLE | BS_LEFT | BS_AUTOCHECKBOX, 250, 35, 80, 20, hWnd, (HMENU)ID_BtnSel, hWnd, 0);
 		hTip2 = CreateWindow(TEXT("Static"), TEXT("模拟方式选择："), WS_CHILD | WS_VISIBLE, 15, 60, 300, 100, hWnd, NULL, hWnd, 0);
 		hCombo_Func = CreateWindow(TEXT("ComboBox"), TEXT(""), CBS_DROPDOWNLIST | WS_CHILD | WS_VISIBLE, 40, 85, 280, 100, hWnd, (HMENU)ID_FuncSel, hWnd, 0);
 		hTip3 = CreateWindow(TEXT("Static"), TEXT("时间间隔(ms)："), WS_CHILD | WS_VISIBLE, 15, 120, 300, 100, hWnd, NULL, hWnd, 0);
@@ -227,6 +265,7 @@ LRESULT WINAPI CtlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		SendMessage(hTip1, WM_SETFONT, (WPARAM)hFont, NULL);
 		SendMessage(hRadio_Left, WM_SETFONT, (WPARAM)hFont, NULL);
 		SendMessage(hRadio_Right, WM_SETFONT, (WPARAM)hFont, NULL);
+		SendMessage(hRandPos, WM_SETFONT, (WPARAM)hFont, NULL);
 		SendMessage(hTip2, WM_SETFONT, (WPARAM)hFont, NULL);
 		SendMessage(hTip3, WM_SETFONT, (WPARAM)hFont, NULL);
 		SendMessage(hTip4, WM_SETFONT, (WPARAM)hFont, NULL);
@@ -261,6 +300,7 @@ LRESULT WINAPI CtlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				// 控件解锁
 				EnableWindow(hRadio_Left, TRUE);
 				EnableWindow(hRadio_Right, TRUE);
+				EnableWindow(hRandPos, TRUE);
 				EnableWindow(hCombo_Func, TRUE);
 				EnableWindow(hText_TL, TRUE);
 				EnableWindow(hCombo_HK, TRUE);
@@ -305,12 +345,14 @@ LRESULT WINAPI CtlProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					MessageBox(hWnd, TEXT("热键注册失败，请尝试其他热键！"), TEXT("无法锁定"), MB_ICONERROR);
 					break;
 				}
+				RandPos = (SendMessage(hRandPos, BM_GETCHECK, 0, 0) == BST_CHECKED);
 				// 检查成功，锁定配置
 				EnableWindow(hRadio_Left, FALSE);
 				EnableWindow(hRadio_Right, FALSE);
 				EnableWindow(hCombo_Func, FALSE);
 				EnableWindow(hText_TL, FALSE);
 				EnableWindow(hCombo_HK, FALSE);
+				EnableWindow(hRandPos, FALSE);
 				SendMessage(hBtn_UorE, WM_SETTEXT, 0, TEXT("(配置已生效)解锁当前配置"));
 				CfgLocked = TRUE;// 标记锁定
 				SaveConfig();

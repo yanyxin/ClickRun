@@ -1,1 +1,71 @@
-﻿
+﻿  t.c
+D:\Work\Code\github\ClickRun\ClickRun\t.c(86,67): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(86,67): warning C4024: “RegOpenKeyExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(105,36): warning C4047: “函数”:“WPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(105,36): warning C4024: “SendMessageW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(105,42): warning C4047: “函数”:“LPARAM”与“wchar_t *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(105,42): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(105,42): warning C4996: '_itow': This function or variable may be unsafe. Consider using _itow_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Work\Code\github\ClickRun\ClickRun\t.c(120,69): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(120,69): warning C4024: “RegCreateKeyExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(122,44): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(122,44): warning C4024: “RegSetValueExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(123,37): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(123,37): warning C4024: “RegSetValueExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(124,35): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(124,35): warning C4024: “RegSetValueExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(125,35): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(125,35): warning C4024: “RegSetValueExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(126,40): warning C4047: “函数”:“DWORD”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(126,40): warning C4024: “RegSetValueExW”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(160,8): warning C4013: “time”未定义；假设外部返回 int
+D:\Work\Code\github\ClickRun\ClickRun\t.c(249,9): warning C4133: “=”: 从“HFONT”到“HWND”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(250,11): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(251,17): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(252,18): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(253,14): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(254,11): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(255,17): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(256,11): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(257,14): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(258,11): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(259,15): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(260,15): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(261,14): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(262,10): warning C4133: “函数”: 从“HWND”到“HINSTANCE”的类型不兼容
+D:\Work\Code\github\ClickRun\ClickRun\t.c(265,49): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(265,49): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(266,55): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(266,55): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(267,56): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(267,56): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(268,52): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(268,52): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(269,49): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(269,49): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(270,49): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(270,49): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(271,49): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(271,49): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(272,52): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(272,52): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(273,53): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(273,53): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(274,48): warning C4047: “函数”:“LPARAM”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(274,48): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(276,45): warning C4047: “函数”:“LPARAM”与“unsigned short [16]”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(276,45): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(277,45): warning C4047: “函数”:“LPARAM”与“unsigned short [14]”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(277,45): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(281,54): warning C4047: “函数”:“LPARAM”与“const TCHAR [4]”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(281,54): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(308,43): warning C4047: “函数”:“LPARAM”与“unsigned short [7]”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(308,43): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(324,17): warning C4244: “=”: 从“LRESULT”转换到“INT”，可能丢失数据
+D:\Work\Code\github\ClickRun\ClickRun\t.c(337,21): warning C4244: “=”: 从“LRESULT”转换到“INT”，可能丢失数据
+D:\Work\Code\github\ClickRun\ClickRun\t.c(343,39): warning C4047: “函数”:“UINT”与“void *”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(343,39): warning C4024: “RegisterHotKey”: 形参和实参 3 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(356,43): warning C4047: “函数”:“LPARAM”与“unsigned short [14]”的间接级别不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(356,43): warning C4024: “SendMessageW”: 形参和实参 4 的类型不同
+D:\Work\Code\github\ClickRun\ClickRun\t.c(390,73): warning C4028: 形参 3 与声明不同
+  ClickRun.vcxproj -> D:\Work\Code\github\ClickRun\x64\Debug\ClickRun.exe
